@@ -4,14 +4,14 @@ import os
 
 import coloredlogs
 
-LOG_DIR_NAME = './'
-LOG_FILE_NAME = 'paket.log'
-FORMAT = '%(asctime)s %(levelname).3s: %(message)s - %(name)s +%(lineno)03d'
-DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
-LEVEL = logging.DEBUG
+LOG_DIR_NAME = os.environ.get('PAKET_LOG_DIR', './')
+LOG_FILE_NAME = os.environ.get('PAKET_LOG_FILE', 'paket.log')
+FORMAT = os.environ.get('PAKET_LOG_FMT', '%(asctime)s %(levelname).3s: %(message)s - %(name)s +%(lineno)03d')
+DATE_FORMAT = os.environ.get('PAKET_LOG_DATE_FMT', '%Y-%m-%d %H:%M:%S')
+LEVEL = os.environ.get('PAKET_LOG_LEVEL', logging.DEBUG)
 
 
-def setup():
+def setup(suppress_loggers=None):
     """Setup the root logger."""
     # Colored logs for terminal. Do this first, because it messes with the logger's level.
     stream_formatter = coloredlogs.ColoredFormatter(
@@ -27,9 +27,10 @@ def setup():
     file_handler = logging.FileHandler(os.path.join(LOG_DIR_NAME, LOG_FILE_NAME))
     file_handler.setFormatter(file_formatter)
 
-    # Remove werkzeug and flask default handlers.
-    logging.getLogger('werkzeug').handlers = []
-    logging.getLogger('flask').handlers = []
+    # Suppress handlers of unwanted loggers.
+    if suppress_loggers:
+        for logger_name in suppress_loggers:
+            logging.getLogger(logger_name).handlers = []
 
     logger = logging.getLogger()
     logger.handlers = []
