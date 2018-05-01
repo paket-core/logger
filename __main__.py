@@ -1,5 +1,5 @@
 import sys
-import os.path
+import os
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 # pylint: disable=wrong-import-position
