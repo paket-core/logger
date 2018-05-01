@@ -1,19 +1,17 @@
+"""Test the package."""
+import os.path
 import sys
-import os
 
+# Python imports are silly.
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 # pylint: disable=wrong-import-position
-# Python imports are silly.
 import logger
-
 # pylint: enable=wrong-import-position
 
 logger.setup()
 
 LOGGER = logger.logging.getLogger('pkt.logger')
 
-if __name__ == '__main__':
-    LOGGER.debug("a debug message")
-    LOGGER.info("an info message")
-    LOGGER.warning("a warning message")
-    LOGGER.error("an error message")
+# pylint: disable=protected-access
+for level in sorted(logger.logging._levelToName.keys()):
+    LOGGER.log(level, "Testing - %s - %s%s", logger.logging._levelToName[level], sys.argv[0], sys.argv[1:])
