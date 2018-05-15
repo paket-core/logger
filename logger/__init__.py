@@ -28,7 +28,7 @@ def setup(suppress_loggers=None):
     file_handler.setFormatter(file_formatter)
 
     # Suppress handlers of unwanted loggers.
-    if suppress_loggers:
+    if suppress_loggers is not None:
         for logger_name in suppress_loggers:
             logging.getLogger(logger_name).handlers = []
 
