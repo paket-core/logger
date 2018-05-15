@@ -1,3 +1,4 @@
+"""Tests for logger package."""
 import sys
 from unittest import TestCase
 
@@ -5,13 +6,23 @@ import logger
 
 
 class TestLogger(TestCase):
+    """Testing logger."""
     def test_output(self):
-        logger.setup()
+        """Try all levels."""
         logger_name = 'pkt.logger'
         pkt_logger = logger.logging.getLogger(logger_name)
-        for level in sorted(list(logger.logging._levelToName.keys())[1:]):
-            level_name = logger.logging._levelToName[level]
-            with self.assertLogs(logger_name, level=level_name) as cm:
-                message = 'Testing - %s - %s%s' % (level_name, sys.argv[0], sys.argv[1:])
-                pkt_logger.log(level, message)
-                self.assertIn(message,  cm.output[0])
+        logger.setup()
+        # pylint: disable=protected-access
+        levels = logger.logging._levelToName
+        # pylint: enable=protected-access
+        for level in sorted(list(levels.keys())[1:]):
+            level_name = levels[level]
+            message = 'Testing - %s - %s%s' % (level_name, sys.argv[0], sys.argv[1:])
+            try:
+                logging_function = getattr(pkt_logger, level_name.lower())
+                logging_function(message)
+                with self.assertLogs(logger_name, level=level_name) as log_capture:
+                    logging_function(message)
+                    self.assertIn(message, log_capture.output[0])
+            except AttributeError:
+                pkt_logger.warning("No logging function for %s(%s)", level_name, level)
