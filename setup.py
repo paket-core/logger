@@ -7,7 +7,7 @@ setup(name='logger',
       license='GNU GPL',
       packages=['logger'],
       install_requires=[
-          'coloredlogs==9.3.1',
+          'coloredlogs==10.0',
       ],
       test_suite='tests',
       zip_safe=False)
