@@ -1,3 +1,4 @@
+"""Install PaKeT Project general utils."""
 from setuptools import setup
 
 setup(name='util',
@@ -8,6 +9,7 @@ setup(name='util',
       packages=['util'],
       install_requires=[
           'coloredlogs==10.0',
+          'requests==2.18.4'
       ],
       test_suite='tests',
       zip_safe=False)
