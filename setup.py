@@ -1,11 +1,11 @@
 from setuptools import setup
 
-setup(name='logger',
-      description='Logger for PaKeT project',
+setup(name='util',
+      description='General utilities for PaKeT project',
       version='1.0.0',
-      url='https://github.com/paket-core/logger',
+      url='https://github.com/paket-core/util',
       license='GNU GPL',
-      packages=['logger'],
+      packages=['util'],
       install_requires=[
           'coloredlogs==10.0',
       ],

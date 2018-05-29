@@ -1,7 +1,7 @@
 """Tests for logger package."""
 from unittest import TestCase
 
-import logger
+import util.logger
 
 
 class TestLogger(TestCase):
@@ -9,10 +9,10 @@ class TestLogger(TestCase):
     def test_output(self):
         """Try all levels"""
         logger_name = 'pkt.logger'
-        pkt_logger = logger.logging.getLogger(logger_name)
-        logger.setup()
+        pkt_logger = util.logger.logging.getLogger(logger_name)
+        util.logger.setup()
         # pylint: disable=protected-access
-        levels = logger.logging._levelToName
+        levels = util.logger.logging._levelToName
         # pylint: enable=protected-access
         for level in sorted(levels.keys()):
             level_name = levels[level]
