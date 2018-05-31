@@ -2,6 +2,7 @@
 import contextlib
 import sqlite3
 
+
 @contextlib.contextmanager
 def sql_connection(db_name):
     """Context manager for querying the database."""
