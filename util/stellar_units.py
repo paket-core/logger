@@ -1,36 +1,35 @@
 """Stellar assets unit handling."""
-import decimal
+# number of decimals after decimal point
+DEC = 7
 
-SCALE_FACTOR = 10 ** 7
 
-
-def stroops_to_units(amount, str_representation=True):
+def stroops_to_units(amount):
     """
     Convert amount presented in stroops to units.
     :param int amount: Amount of stroops to be converted
-    :param bool str_representation: If given returns string representation of result value. Otherwise returns float.
     """
-    units = decimal.Decimal(amount) / decimal.Decimal(SCALE_FACTOR)
-    if str_representation:
-        return '{:.7f}'.format(units)
-    return float(units)
+    if not isinstance(amount, int):
+        raise TypeError
+
+    amount = '{amount:0>{decimals}}'.format(amount=amount, decimals=DEC)
+    amount = '0.{}'.format(amount) if len(amount) == DEC else '{}.{}'.format(amount[:-DEC], amount[-DEC:])
+    return amount
 
 
-def units_to_stroops(amount, str_representation=True):
+def units_to_stroops(amount):
     """
     Convert amount presented in units to stroops.
     :param str amount: Amount of units to be converted
-    :param bool str_representation: If given returns string representation of result value. Otherwise returns int.
     """
-    units = decimal.Decimal(amount) * decimal.Decimal(SCALE_FACTOR)
-    if str_representation:
-        return str((int(units)))
-    return int(units)
+    if not isinstance(amount, str) and not isinstance(amount, float):
+        raise TypeError
 
-
-def add_units(first, second, str_representation=True):
-    """Add two units"""
-    result = decimal.Decimal(first) + decimal.Decimal(second)
-    if str_representation:
-        return '{:.7f}'.format(result)
-    return float(result)
+    integer_part, fractional_part = str(amount).split('.')
+    if integer_part != '0':
+        amount = '{0}{1:0<{decimals}}'.format(integer_part, fractional_part, decimals=DEC)
+    else:
+        striped = fractional_part.lstrip('0')
+        leading_zeros_amount = len(fractional_part) - len(striped)
+        trailing_zeros_amount = DEC - leading_zeros_amount - len(striped)
+        amount = '{0}{1}'.format(striped, '0' * trailing_zeros_amount)
+    return amount
