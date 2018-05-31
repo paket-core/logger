@@ -5,9 +5,10 @@ SCALE_FACTOR = 10 ** 7
 
 
 def stroops_to_units(amount, str_representation=True):
-    """Convert amount presented in stroops to units
+    """
+    Convert amount presented in stroops to units.
     :param int amount: Amount of stroops to be converted
-    :param bool str_representation: If given returns string representation of result value. Otherwise returns float
+    :param bool str_representation: If given returns string representation of result value. Otherwise returns float.
     """
     units = decimal.Decimal(amount) / decimal.Decimal(SCALE_FACTOR)
     if str_representation:
@@ -16,9 +17,10 @@ def stroops_to_units(amount, str_representation=True):
 
 
 def units_to_stroops(amount, str_representation=True):
-    """Convert amount presented in units to stroops
+    """
+    Convert amount presented in units to stroops.
     :param str amount: Amount of units to be converted
-    :param bool str_representation: If given returns string representation of result value. Otherwise returns int
+    :param bool str_representation: If given returns string representation of result value. Otherwise returns int.
     """
     units = decimal.Decimal(amount) * decimal.Decimal(SCALE_FACTOR)
     if str_representation:
