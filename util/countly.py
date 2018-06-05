@@ -42,9 +42,9 @@ def send_countly_event(key, count, begin_session=None, end_session=None, **kwarg
     # pylint: disable=broad-except
     try:
         response = requests.get(COUNTLY_URL, params=payload)
-        LOGGER.debug("response: %s", response)
-        LOGGER.debug("URI: %s", response.url)
-        LOGGER.debug("text: %s", response.text)
+        LOGGER.debug('response: %s', response)
+        LOGGER.debug('URI: %s', response.url)
+        LOGGER.debug('text: %s', response.text)
     except Exception as exception:
         LOGGER.error('failed request to countly: %s', str(exception))
     # pylint: enable=broad-except
