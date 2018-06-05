@@ -1,4 +1,4 @@
-"""Tests for logger package."""
+"""Tests for logger module"""
 from unittest import TestCase
 
 import util.logger

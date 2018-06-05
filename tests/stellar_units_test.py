@@ -1,4 +1,4 @@
-"""Test for stellar units conversion"""
+"""Tests for stellar units conversion"""
 import unittest
 
 import util.stellar_units
