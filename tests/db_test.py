@@ -63,8 +63,10 @@ class TestDB(unittest.TestCase):
             with util.db.sql_connection(DB_NAME) as sql:
                 sql.execute('CREATE TABLE test(id INTEGER UNIQUE, number INTEGER)')
                 sql.execute('CREATE TABLE test(id INTEGER UNIQUE, number INTEGER)')  # should raise ProgrammingError
+        # pylint: disable=bare-except
         except:
             pass  # ignore raised Exception
+        # pylint: enable=bare-except
         finally:
             LOGGER.info('attempting operation after raising exception')
             self.assertRaises(sqlite3.ProgrammingError, sql.fetchone)

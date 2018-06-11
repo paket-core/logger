@@ -61,6 +61,7 @@ class TestUnitsToStroops(unittest.TestCase):
             '0.000001': '10',
             '0.1234567': '1234567',
             '0.0005600': '5600',
+            '45': '450000000',
             '174.5127942': '1745127942',
             '187398743124.8795178': '1873987431248795178'
         }
@@ -76,6 +77,7 @@ class TestUnitsToStroops(unittest.TestCase):
             '0.000001': 10,
             '0.1234567': 1234567,
             '0.0005600': 5600,
+            '45': 450000000,
             '174.5127942': 1745127942,
             '187398743124.8795178': 1873987431248795178
         }
@@ -87,7 +89,6 @@ class TestUnitsToStroops(unittest.TestCase):
     def test_invalid_type(self):
         """Testing units_to_stroops function on data set of invalid type values"""
         data_set = [
-            456,
             True,
             [2789],
             {'value': 17}
