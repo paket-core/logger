@@ -11,11 +11,17 @@ class TestStroopsToUnits(unittest.TestCase):
         """Testing stroops_to_units function on valid data set"""
         data_set = {
             1: '0.0000001',
+            '1': '0.0000001',
             10: '0.0000010',
+            '10': '0.0000010',
             1234567: '0.1234567',
+            '1234567': '0.1234567',
             5600: '0.0005600',
+            '5600': '0.0005600',
             1745127942: '174.5127942',
-            1873987431248795178: '187398743124.8795178'
+            '1745127942': '174.5127942',
+            1873987431248795178: '187398743124.8795178',
+            '1873987431248795178': '187398743124.8795178'
         }
         for input_value, expected_value in data_set.items():
             with self.subTest(input_value=input_value, expected_value=expected_value):
@@ -40,7 +46,6 @@ class TestStroopsToUnits(unittest.TestCase):
     def test_invalid_type(self):
         """Testing stroops_to_units function on data set of invalid type values"""
         data_set = [
-            '456',
             10.458,
             True,
             [2789],
@@ -63,6 +68,7 @@ class TestUnitsToStroops(unittest.TestCase):
             '0.0005600': '5600',
             '45': '450000000',
             '174.5127942': '1745127942',
+            '1792.0045': '17920045000',
             '187398743124.8795178': '1873987431248795178'
         }
         for input_value, expected_value in data_set.items():
@@ -79,6 +85,7 @@ class TestUnitsToStroops(unittest.TestCase):
             '0.0005600': 5600,
             '45': 450000000,
             '174.5127942': 1745127942,
+            '1792.0045': 17920045000,
             '187398743124.8795178': 1873987431248795178
         }
         for input_value, expected_value in data_set.items():
