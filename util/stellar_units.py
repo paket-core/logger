@@ -44,6 +44,8 @@ def units_to_stroops(amount, numeric_representation=False):
         trailing_zeros_amount = DEC - leading_zeros_amount - len(striped)
         amount = "{0}{1}".format(striped, '0' * trailing_zeros_amount)
 
+    # write 0 to amount in case we got empty string, otherwise leave it as is
+    amount = '0' if not amount else amount
     if numeric_representation:
         amount = int(amount)
     return amount
