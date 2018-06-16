@@ -1,5 +1,4 @@
 """Tests for db module"""
-import os
 import unittest
 
 import util.db
@@ -14,29 +13,16 @@ util.logger.setup()
 class TestDB(unittest.TestCase):
     """Tests for db"""
 
-    @staticmethod
-    def cleanup():
-        """Remove db files."""
-        try:
-            os.unlink(DB_NAME)
-        except FileNotFoundError:
-            pass
-        assert not os.path.isfile(DB_NAME)
-
     def setUp(self):
-        """Prepare the test fixture"""
         LOGGER.info('setting up')
-        self.cleanup()
-
-    def tearDown(self):
-        LOGGER.info('tearing down')
-        self.cleanup()
+        with util.db.sql_connection(DB_NAME) as sql:
+            sql.execute("DROP DATABASE IF EXISTS {}".format(DB_NAME))
+            sql.execute("CREATE DATABASE {}".format(DB_NAME))
 
     def test_sql(self):
         """Test selecting from just created and filled table"""
         LOGGER.info('creating and filling new table')
         with util.db.sql_connection(DB_NAME) as sql:
-            sql.execute('DROP TABLE IF EXISTS test')
             sql.execute('CREATE TABLE test(id INTEGER UNIQUE, number INTEGER)')
             sql.execute('INSERT INTO test (id, number) VALUES (0, 144)')
             sql.execute('INSERT INTO test (id, number) VALUES (1, 13)')
@@ -44,9 +30,9 @@ class TestDB(unittest.TestCase):
         LOGGER.info('selecting data from table')
         with util.db.sql_connection(DB_NAME) as sql:
             sql.execute('SELECT number FROM test WHERE number > 100')
-            result = sql.fetchone()
+            result = sql.fetchall()
             self.assertNotEqual(result, None)
-            self.assertEqual(result[0], 144)
+            self.assertEqual(result[0]['number'], 144)
 
     def test_closing(self):
         """Test closing connection"""
