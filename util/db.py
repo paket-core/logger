@@ -9,7 +9,7 @@ def sql_connection(db_name):
     """Context manager for querying the database."""
     try:
         connection = mysql.connector.connect(database=db_name)
-        yield connection.cursor()
+        yield connection.cursor(dictionary=True)
         connection.commit()
     except mysql.connector.Error as db_exception:
         raise db_exception
