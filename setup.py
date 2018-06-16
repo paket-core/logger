@@ -9,7 +9,8 @@ setup(name='util',
       packages=['util'],
       install_requires=[
           'coloredlogs==10.0',
-          'requests==2.18.4'
+          'requests==2.18.4',
+          'mysql-connector-python==8.0.11'
       ],
       test_suite='tests',
       zip_safe=False)

@@ -1,17 +1,17 @@
 """Database utils."""
 import contextlib
-import sqlite3
+
+import mysql.connector
 
 
 @contextlib.contextmanager
 def sql_connection(db_name):
     """Context manager for querying the database."""
     try:
-        connection = sqlite3.connect(db_name)
-        connection.row_factory = sqlite3.Row
+        connection = mysql.connector.connect(database=db_name)
         yield connection.cursor()
         connection.commit()
-    except sqlite3.Error as db_exception:
+    except mysql.connector.Error as db_exception:
         raise db_exception
     finally:
         if 'connection' in locals():

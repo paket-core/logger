@@ -7,7 +7,7 @@ import util.db
 import util.logger
 
 
-DB_NAME = 'test.db'
+DB_NAME = 'paket_test'
 LOGGER = util.logger.logging.getLogger('pkt.util.test')
 util.logger.setup()
 
@@ -37,6 +37,7 @@ class TestDB(unittest.TestCase):
         """Test selecting from just created and filled table"""
         LOGGER.info('creating and filling new table')
         with util.db.sql_connection(DB_NAME) as sql:
+            sql.execute('DROP TABLE IF EXISTS test')
             sql.execute('CREATE TABLE test(id INTEGER UNIQUE, number INTEGER)')
             sql.execute('INSERT INTO test (id, number) VALUES (0, 144)')
             sql.execute('INSERT INTO test (id, number) VALUES (1, 13)')
@@ -52,15 +53,18 @@ class TestDB(unittest.TestCase):
         """Test closing connection"""
         LOGGER.info('creating new table')
         with util.db.sql_connection(DB_NAME) as sql:
+            sql.execute('DROP TABLE IF EXISTS test')
             sql.execute('CREATE TABLE test(id INTEGER UNIQUE, number INTEGER)')
         LOGGER.info('attempting operation after closing connection')
-        self.assertRaises(sqlite3.ProgrammingError, sql.fetchone)
+        with self.assertRaises(ReferenceError):
+            sql.fetchone()
 
     def test_closing_on_exception(self):
         """Test closing connection on exception"""
         LOGGER.info('expecting raising exception')
         try:
             with util.db.sql_connection(DB_NAME) as sql:
+                sql.execute('DROP TABLE IF EXISTS test;')
                 sql.execute('CREATE TABLE test(id INTEGER UNIQUE, number INTEGER)')
                 sql.execute('CREATE TABLE test(id INTEGER UNIQUE, number INTEGER)')  # should raise ProgrammingError
         # pylint: disable=broad-except
@@ -69,4 +73,5 @@ class TestDB(unittest.TestCase):
         # pylint: enable=broad-except
         finally:
             LOGGER.info('attempting operation after raising exception')
-            self.assertRaises(sqlite3.ProgrammingError, sql.fetchone)
+            with self.assertRaises(ReferenceError):
+                sql.fetchone()
