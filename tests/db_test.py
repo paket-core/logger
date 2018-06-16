@@ -1,6 +1,5 @@
 """Tests for db module"""
 import os
-import sqlite3
 import unittest
 
 import util.db
