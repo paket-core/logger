@@ -1,7 +1,9 @@
 *$py.class
-*.log
 *.egg-info
+*.log
 *.py[cod]
+build
+dist
 .eggs
 .idea
 __pycache__/
