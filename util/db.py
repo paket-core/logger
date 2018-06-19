@@ -1,17 +1,15 @@
 """Database utils."""
 import contextlib
-import os
+import functools
 
 import mysql.connector
 
-USER = os.environ['PAKET_DB_USER']
-PASSWORD = os.environ['PAKET_DB_PASSWD']
 
 @contextlib.contextmanager
-def sql_connection(db_name=None, user=None, password=None):
+def sql_connection(db_name=None, host=None, port=3306, user=None, password=None):
     """Context manager for querying the database."""
     try:
-        connection = mysql.connector.connect(database=db_name, user=user or USER, passwd=password or PASSWORD)
+        connection = mysql.connector.connect(host=host, port=port, user=user, passwd=password, database=db_name)
         yield connection.cursor(dictionary=True)
         connection.commit()
     except mysql.connector.Error as db_exception:
@@ -20,3 +18,8 @@ def sql_connection(db_name=None, user=None, password=None):
         if 'connection' in locals():
             # noinspection PyUnboundLocalVariable
             connection.close()
+
+
+def custom_sql_connection(host=None, port=3306, user=None, password=None, db_name=None):
+    """Return a customized sql_connection context manager."""
+    return functools.partial(sql_connection, db_name, host, port, user, password)
