@@ -69,7 +69,8 @@ class TestUnitsToStroops(unittest.TestCase):
             '45': '450000000',
             '174.5127942': '1745127942',
             '1792.0045': '17920045000',
-            '187398743124.8795178': '1873987431248795178'
+            '187398743124.8795178': '1873987431248795178',
+            '1792.0045126789125479': '17920045126',
         }
         for input_value, expected_value in data_set.items():
             with self.subTest(input_value=input_value, expected_value=expected_value):
@@ -86,7 +87,8 @@ class TestUnitsToStroops(unittest.TestCase):
             '45': 450000000,
             '174.5127942': 1745127942,
             '1792.0045': 17920045000,
-            '187398743124.8795178': 1873987431248795178
+            '187398743124.8795178': 1873987431248795178,
+            '1792.0045126789125479': 17920045126,
         }
         for input_value, expected_value in data_set.items():
             with self.subTest(input_value=input_value, expected_value=expected_value):
