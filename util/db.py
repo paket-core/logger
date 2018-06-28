@@ -23,3 +23,11 @@ def sql_connection(db_name=None, host=None, port=3306, user=None, password=None)
 def custom_sql_connection(host=None, port=3306, user=None, password=None, db_name=None):
     """Return a customized sql_connection context manager."""
     return functools.partial(sql_connection, db_name, host, port, user, password)
+
+
+def clear_tables(active_sql_connection, db_name):
+    """Clear all tables in the database."""
+    with active_sql_connection() as sql:
+        sql.execute("SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA = %s", (db_name,))
+        for table_name in [row['TABLE_NAME'] for row in sql.fetchall()]:
+            sql.execute("DELETE from {}".format(table_name))
