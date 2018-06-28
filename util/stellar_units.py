@@ -33,6 +33,7 @@ def units_to_stroops(amount, numeric_representation=False):
     amount = str(amount)
     if DECIMAL_POINT in amount:
         integer_part, fractional_part = amount.split(DECIMAL_POINT)
+        fractional_part = fractional_part[:DEC]
     else:
         integer_part, fractional_part = amount, '0' * DEC
 
@@ -44,7 +45,7 @@ def units_to_stroops(amount, numeric_representation=False):
         trailing_zeros_amount = DEC - leading_zeros_amount - len(striped)
         amount = "{0}{1}".format(striped, '0' * trailing_zeros_amount)
 
-    amount = amount or 0
+    amount = amount or '0'
     if numeric_representation:
         amount = int(amount)
     return amount
