@@ -13,7 +13,7 @@ def _divisible_to_indivisible(amount, decimals, numeric_representation=False):
     :param str or int amount: Amount of units to be converted
     :param int decimals: Number of decimals in convertible currency
     :param bool numeric_representation: If true, result will be returned as integer number, otherwise - string
-    :return int or str: amount of indivisible units
+    :return int or str: Amount of indivisible units
     """
     if not isinstance(amount, str) and not (isinstance(amount, int) and not isinstance(amount, bool)):
         raise TypeError('Only string and integer allowed for conversions')
@@ -39,21 +39,54 @@ def _divisible_to_indivisible(amount, decimals, numeric_representation=False):
     return amount
 
 
+def _indivisible_to_divisible(amount, decimals, numeric_representation=False):
+    """
+    Convert amount of some currency from indivisible units to divisible
+    :param str or int amount: Amount of units to be converted
+    :param int decimals: Number of decimals in convertible currency
+    :param bool numeric_representation: If true, result will be returned as float number, otherwise - string
+    :return str or float: Amount of divisible units
+    """
+    if not isinstance(amount, str) and not (isinstance(amount, int) and not isinstance(amount, bool)):
+        raise TypeError('Only string and integer allowed for conversions')
+
+    amount = "{amount:0>{decimals}}".format(amount=amount, decimals=decimals)
+    amount = "0.{}".format(amount) \
+        if len(amount) == decimals else "{}.{}".format(amount[:-decimals], amount[-decimals:])
+
+    if numeric_representation:
+        amount = float(amount)
+    return amount
+
+
 def stroops_to_units(amount, numeric_representation=False):
     """
     Convert amount presented in stroops to units.
     :param str or int amount: Amount of stroops to be converted
     :param numeric_representation: If true, result will be returned as float number, otherwise - string
+    :return str or float: Amount of stellar units
     """
-    if not isinstance(amount, str) and not (isinstance(amount, int) and not isinstance(amount, bool)):
-        raise TypeError('Only string and integer allowed for conversions')
+    return _indivisible_to_divisible(amount, STELLAR_DECIMALS, numeric_representation)
 
-    amount = "{amount:0>{decimals}}".format(amount=amount, decimals=DEC)
-    amount = "0.{}".format(amount) if len(amount) == DEC else "{}.{}".format(amount[:-DEC], amount[-DEC:])
 
-    if numeric_representation:
-        amount = float(amount)
-    return amount
+def wei_to_eth(amount, numeric_representation=False):
+    """
+    Convert wei to ethereum
+    :param str or int amount: Amount of wei to be converted
+    :param bool numeric_representation: If true, result will be returned as float number, otherwise - string
+    :return str or float: Amount of ethereum
+    """
+    return _indivisible_to_divisible(amount, ETH_DECIMALS, numeric_representation)
+
+
+def satoshi_to_btc(amount, numeric_representation=False):
+    """
+    Convert satoshi to bitcoin
+    :param str or int amount: Amount of bitcoin to be converted
+    :param bool numeric_representation: If true, result will be returned as float number, otherwise - string
+    :return str or float : Amount of bitcoin
+    """
+    return _indivisible_to_divisible(amount, BTC_DECIMALS, numeric_representation)
 
 
 def units_to_stroops(amount, numeric_representation=False):
