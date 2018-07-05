@@ -1,7 +1,7 @@
 """Tests for stellar units conversion"""
 import unittest
 
-import util.stellar_units
+import util.conversion
 
 
 class TestStroopsToUnits(unittest.TestCase):
@@ -25,7 +25,7 @@ class TestStroopsToUnits(unittest.TestCase):
         }
         for input_value, expected_value in data_set.items():
             with self.subTest(input_value=input_value, expected_value=expected_value):
-                output_value = util.stellar_units.stroops_to_units(input_value)
+                output_value = util.conversion.stroops_to_units(input_value)
                 self.assertEqual(output_value, expected_value)
 
     def test_numeric_representation(self):
@@ -40,7 +40,7 @@ class TestStroopsToUnits(unittest.TestCase):
         }
         for input_value, expected_value in data_set.items():
             with self.subTest(input_value=input_value, expected_value=expected_value):
-                output_value = util.stellar_units.stroops_to_units(input_value, numeric_representation=True)
+                output_value = util.conversion.stroops_to_units(input_value, numeric_representation=True)
                 self.assertEqual(output_value, expected_value)
 
     def test_invalid_type(self):
@@ -53,7 +53,7 @@ class TestStroopsToUnits(unittest.TestCase):
         ]
         for invalid_type_value in data_set:
             with self.subTest(value=invalid_type_value):
-                self.assertRaises(TypeError, util.stellar_units.stroops_to_units, invalid_type_value)
+                self.assertRaises(TypeError, util.conversion.stroops_to_units, invalid_type_value)
 
 
 class TestUnitsToStroops(unittest.TestCase):
@@ -74,7 +74,7 @@ class TestUnitsToStroops(unittest.TestCase):
         }
         for input_value, expected_value in data_set.items():
             with self.subTest(input_value=input_value, expected_value=expected_value):
-                output_value = util.stellar_units.units_to_stroops(input_value)
+                output_value = util.conversion.units_to_stroops(input_value)
                 self.assertEqual(output_value, expected_value)
 
     def test_numeric_representation(self):
@@ -92,7 +92,7 @@ class TestUnitsToStroops(unittest.TestCase):
         }
         for input_value, expected_value in data_set.items():
             with self.subTest(input_value=input_value, expected_value=expected_value):
-                output_value = util.stellar_units.units_to_stroops(input_value, numeric_representation=True)
+                output_value = util.conversion.units_to_stroops(input_value, numeric_representation=True)
                 self.assertEqual(output_value, expected_value)
 
     def test_invalid_type(self):
@@ -104,4 +104,4 @@ class TestUnitsToStroops(unittest.TestCase):
         ]
         for invalid_type_value in data_set:
             with self.subTest(value=invalid_type_value):
-                self.assertRaises(TypeError, util.stellar_units.units_to_stroops, invalid_type_value)
+                self.assertRaises(TypeError, util.conversion.units_to_stroops, invalid_type_value)

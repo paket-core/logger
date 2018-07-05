@@ -1,6 +1,9 @@
-"""Stellar assets unit handling."""
-# number of decimals after decimal point
+"""Bitcoin, ethereum, stellar units handling."""
+# number of decimals after decimal point in stellar asset
 DEC = 7
+ETH_DECIMALS = 18
+BTC_DECIMALS = 8
+STELLAR_DECIMALC = 7
 DECIMAL_POINT = '.'
 
 
@@ -43,6 +46,37 @@ def units_to_stroops(amount, numeric_representation=False):
         striped = fractional_part.lstrip('0')
         leading_zeros_amount = len(fractional_part) - len(striped)
         trailing_zeros_amount = DEC - leading_zeros_amount - len(striped)
+        amount = "{0}{1}".format(striped, '0' * trailing_zeros_amount)
+
+    amount = amount or '0'
+    if numeric_representation:
+        amount = int(amount)
+    return amount
+
+
+def eth_to_wei(amount, numeric_representation=False):
+    """
+    Convert ethereum to wei
+    :param str or int amount: Amount of ethereum to be converted
+    :return int: Amount of wei
+    """
+    # TODO: move it to separate universal function
+    if not isinstance(amount, str) and not (isinstance(amount, int) and not isinstance(amount, bool)):
+        raise TypeError('Only string and integer allowed for conversions')
+
+    amount = str(amount)
+    if DECIMAL_POINT in amount:
+        integer_part, fractional_part = amount.split(DECIMAL_POINT)
+        fractional_part = fractional_part[:ETH_DECIMALS]
+    else:
+        integer_part, fractional_part = amount, '0' * ETH_DECIMALS
+
+    if integer_part != '0':
+        amount = "{0}{1:<0{decimals}}".format(integer_part, fractional_part, decimals=ETH_DECIMALS)
+    else:
+        striped = fractional_part.lstrip('0')
+        leading_zeros_amount = len(fractional_part) - len(striped)
+        trailing_zeros_amount = ETH_DECIMALS - leading_zeros_amount - len(striped)
         amount = "{0}{1}".format(striped, '0' * trailing_zeros_amount)
 
     amount = amount or '0'
