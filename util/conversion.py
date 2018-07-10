@@ -7,7 +7,7 @@ STELLAR_DECIMALS = 7
 DECIMAL_POINT = '.'
 
 
-def _divisible_to_indivisible(amount, decimals, numeric_representation=False):
+def divisible_to_indivisible(amount, decimals, numeric_representation=False):
     """
     Convert amount of some currency from divisible units to indivisible.
     :param str or int amount: Amount of units to be converted
@@ -39,7 +39,7 @@ def _divisible_to_indivisible(amount, decimals, numeric_representation=False):
     return amount
 
 
-def _indivisible_to_divisible(amount, decimals, numeric_representation=False):
+def indivisible_to_divisible(amount, decimals, numeric_representation=False):
     """
     Convert amount of some currency from indivisible units to divisible
     :param str or int amount: Amount of units to be converted
@@ -69,7 +69,7 @@ def stroops_to_units(amount, numeric_representation=False):
     :param numeric_representation: If true, result will be returned as float number, otherwise - string
     :return str or float: Amount of stellar units
     """
-    return _indivisible_to_divisible(amount, STELLAR_DECIMALS, numeric_representation)
+    return indivisible_to_divisible(amount, STELLAR_DECIMALS, numeric_representation)
 
 
 def units_to_stroops(amount, numeric_representation=False):
@@ -79,7 +79,7 @@ def units_to_stroops(amount, numeric_representation=False):
     :param bool numeric_representation: If true, result will be returned as integer number, otherwise - string
     :return str or int: Amount of stroops
     """
-    return _divisible_to_indivisible(amount, STELLAR_DECIMALS, numeric_representation)
+    return divisible_to_indivisible(amount, STELLAR_DECIMALS, numeric_representation)
 
 
 def wei_to_eth(amount, numeric_representation=False):
@@ -89,7 +89,7 @@ def wei_to_eth(amount, numeric_representation=False):
     :param bool numeric_representation: If true, result will be returned as float number, otherwise - string
     :return str or float: Amount of ethereum
     """
-    return _indivisible_to_divisible(amount, ETH_DECIMALS, numeric_representation)
+    return indivisible_to_divisible(amount, ETH_DECIMALS, numeric_representation)
 
 
 def eth_to_wei(amount, numeric_representation=False):
@@ -99,7 +99,7 @@ def eth_to_wei(amount, numeric_representation=False):
     :param bool numeric_representation: If true, result will be returned as integer number, otherwise - string
     :return str or int: Amount of wei
     """
-    return _divisible_to_indivisible(amount, ETH_DECIMALS, numeric_representation)
+    return divisible_to_indivisible(amount, ETH_DECIMALS, numeric_representation)
 
 
 def satoshi_to_btc(amount, numeric_representation=False):
@@ -109,7 +109,7 @@ def satoshi_to_btc(amount, numeric_representation=False):
     :param bool numeric_representation: If true, result will be returned as float number, otherwise - string
     :return str or float : Amount of bitcoin
     """
-    return _indivisible_to_divisible(amount, BTC_DECIMALS, numeric_representation)
+    return indivisible_to_divisible(amount, BTC_DECIMALS, numeric_representation)
 
 
 def btc_to_satoshi(amount, numeric_representation=False):
@@ -119,4 +119,4 @@ def btc_to_satoshi(amount, numeric_representation=False):
     :param numeric_representation: If true, result will be returned as integer number, otherwise - string
     :return str or int: Amount of satoshi
     """
-    return _divisible_to_indivisible(amount, BTC_DECIMALS, numeric_representation)
+    return divisible_to_indivisible(amount, BTC_DECIMALS, numeric_representation)
