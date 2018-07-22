@@ -4,8 +4,8 @@ import logging
 
 import requests
 
-COUNTLY_URL = 'http://c.paket.global/i'
 LOGGER = logging.getLogger('pkt.util')
+COUNTLY_URL = 'http://c.paket.global/i'
 
 
 def send_countly_event(key, count, begin_session=None, end_session=None, **kwargs):

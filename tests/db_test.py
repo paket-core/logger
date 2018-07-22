@@ -6,13 +6,12 @@ import util.db
 import util.logger
 
 
+LOGGER = util.logger.logging.getLogger('pkt.util.test')
 DB_HOST = os.environ.get('PAKET_DB_HOST', '127.0.0.1')
 DB_PORT = int(os.environ.get('PAKET_DB_PORT', 3306))
 DB_USER = os.environ.get('PAKET_DB_USER', 'root')
 DB_PASSWORD = os.environ.get('PAKET_DB_PASSWORD')
 DB_NAME = 'paket_test'
-LOGGER = util.logger.logging.getLogger('pkt.util.test')
-util.logger.setup()
 
 
 class TestDB(unittest.TestCase):

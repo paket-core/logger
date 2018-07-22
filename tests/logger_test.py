@@ -10,7 +10,6 @@ class TestLogger(TestCase):
         """Try all levels"""
         logger_name = 'pkt.logger'
         pkt_logger = util.logger.logging.getLogger(logger_name)
-        util.logger.setup()
         # pylint: disable=protected-access
         levels = util.logger.logging._levelToName
         # pylint: enable=protected-access
