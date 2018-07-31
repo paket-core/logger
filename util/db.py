@@ -33,6 +33,14 @@ def clear_tables(active_sql_connection, db_name):
             sql.execute("DELETE from {}".format(table_name))
 
 
+def drop_tables(active_sql_connection, db_name):
+    """Drop all tables in the database."""
+    with active_sql_connection() as sql:
+        sql.execute("SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA = %s", (db_name,))
+        for table_name in [row['TABLE_NAME'] for row in sql.fetchall()]:
+            sql.execute("DROP TABLE {}".format(table_name))
+
+
 def get_table_columns(active_sql_connection, db_name, table_name):
     """Get the fields of a specific table."""
     with active_sql_connection() as sql:
