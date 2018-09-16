@@ -8,6 +8,7 @@ class DistanceTest(unittest.TestCase):
     """Test for distance calculations."""
 
     def test_distance(self):
+        """Test distance calculations."""
         from_location = '47.858048,35.104131'
         to_location = '47.834367,35.147932'
         expected_distance = 4.19
