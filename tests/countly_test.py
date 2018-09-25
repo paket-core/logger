@@ -1,4 +1,4 @@
-"""Tests for countly module"""
+"""Tests for countly module."""
 import unittest
 
 import util.countly

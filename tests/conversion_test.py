@@ -1,4 +1,4 @@
-"""Tests for currencies conversion"""
+"""Tests for conversion module."""
 import unittest
 
 import util.conversion
