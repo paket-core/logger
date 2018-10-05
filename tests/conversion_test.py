@@ -152,3 +152,13 @@ class TestStellarConversion(TestBaseConversion):
         }
         self.conversion(data_set, util.conversion.stroops_to_units,
                         message='stroops to stellar units conversion failed')
+
+
+class EuroToBulTest(unittest.TestCase):
+    """Test conversion from euro cents to BUL stroops."""
+
+    def euro_to_bul_test(self):
+        """Test conversion from euro cents to BUL stroops."""
+        price, euro_cents_amount = 10, 100
+        bul_stroops = util.conversion.euro_cents_to_bul_stroops(euro_cents_amount, price)
+        self.assertEqual(bul_stroops, 1000, "{} BUL stroops expected, {} got instead".format(1000, bul_stroops))

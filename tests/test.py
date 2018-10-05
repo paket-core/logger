@@ -2,7 +2,6 @@
 # pylint: disable=wildcard-import,unused-wildcard-import
 from tests.conversion_test import *
 from tests.countly_test import *
-from tests.currency_conversions_test import *
 from tests.db_test import *
 from tests.distance_test import *
 from tests.logger_test import *
