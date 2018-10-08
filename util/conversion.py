@@ -1,6 +1,4 @@
 """Bitcoin, ethereum, stellar units handling. Conversions to and from fiat currencies."""
-import requests
-
 import util.logger
 
 # number of decimals after decimal point in currencies
@@ -9,13 +7,7 @@ BTC_DECIMALS = 8
 STELLAR_DECIMALS = 7
 DECIMAL_POINT = '.'
 
-# currencies ids on coinmarketcap.com
-XLM_ID = 512
-ETH_ID = 1027
-BTC_ID = 1
-
 LOGGER = util.logger.logging.getLogger('pkt.util.currency_conversions')
-MARKET_URL_FORMAT = 'https://api.coinmarketcap.com/v2/ticker/{}/?convert={}'
 
 
 def divisible_to_indivisible(amount, decimals):
@@ -119,21 +111,6 @@ def btc_to_satoshi(amount):
     :return int: Amount of satoshi
     """
     return divisible_to_indivisible(amount, BTC_DECIMALS)
-
-
-def get_currency_price(id_, convert):
-    """
-    Get crypto currency price in specified fiat currency.
-    Crypto currency specifies as id from coinmarketcap.com
-    :param id_: Currency id on coinmarketcap.com
-    :param convert: Name of fiat currency
-    :return: Amount of specified fiat currency by one unit of specified crypto currency
-    """
-    url = MARKET_URL_FORMAT.format(id_, convert)
-    response = requests.get(url)
-    price = response.json()['data']['quotes'][convert]['price']
-    # we need to cast to string because API returns price as float number
-    return str(price)
 
 
 def currency_to_euro_cents(amount, eur_price, decimals):
