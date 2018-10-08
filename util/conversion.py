@@ -208,11 +208,14 @@ def euro_cents_to_xlm_stroops(euro_cents_amount, xlm_price):
     :param xlm_price: EUR price of one XLM
     :return: amount of XLM stroops
     """
-    price_decimals = len(xlm_price.split('.')[1])
+    try:
+        price_decimals = len(xlm_price.split('.')[1])
+    except IndexError:
+        price_decimals = 0
     fictitious_units_amount = divisible_to_indivisible(euro_cents_amount, STELLAR_DECIMALS + price_decimals)
     fictitious_units_price = divisible_to_indivisible(xlm_price, price_decimals + 2)
     stroops = fictitious_units_amount // fictitious_units_price
-    LOGGER.warning("precision loss: %s / %s = %s", fictitious_units_amount, fictitious_units_price, stroops)
+    LOGGER.warning("possible precision loss: %s / %s = %s", fictitious_units_amount, fictitious_units_price, stroops)
     return stroops
 
 
@@ -224,9 +227,12 @@ def euro_cents_to_bul_stroops(euro_cents_amount, bul_price):
     :param bul_price: EUR price of one BUL
     :return:
     """
-    price_decimals = len(bul_price.split('.')[1])
+    try:
+        price_decimals = len(bul_price.split('.')[1])
+    except IndexError:
+        price_decimals = 0
     fictitious_units_amount = divisible_to_indivisible(euro_cents_amount, STELLAR_DECIMALS + price_decimals)
     fictitious_units_price = divisible_to_indivisible(bul_price, price_decimals + 2)
     stroops = fictitious_units_amount // fictitious_units_price
-    LOGGER.warning("precision loss: %s / %s = %s", fictitious_units_amount, fictitious_units_price, stroops)
+    LOGGER.warning("possible precision loss: %s / %s = %s", fictitious_units_amount, fictitious_units_price, stroops)
     return stroops
