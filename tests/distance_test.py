@@ -1,4 +1,4 @@
-"""Test for distance module"""
+"""Test for distance module."""
 import unittest
 
 import util.distance

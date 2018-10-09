@@ -1,4 +1,4 @@
-"""Tests for currencies conversion"""
+"""Tests for conversion module."""
 import unittest
 
 import util.conversion
@@ -152,3 +152,45 @@ class TestStellarConversion(TestBaseConversion):
         }
         self.conversion(data_set, util.conversion.stroops_to_units,
                         message='stroops to stellar units conversion failed')
+
+
+class EuroToBulStellarConversion(unittest.TestCase):
+    """Test conversion from euro cents to BUL stroops."""
+
+    def euro_to_stellar(self, data_set, conversion_function, msg):
+        """Test conversion from euro cents to stellar currency (native or asset)."""
+        for data in data_set:
+            with self.subTest(price=data['price'], amount=data['euro_cent_amount'],
+                              expected=data['expected']):
+                stroops = conversion_function(data['euro_cent_amount'], data['price'])
+                self.assertEqual(stroops, data['expected'],
+                                 msg.format(data['expected'], stroops))
+
+    def test_euro_to_bul(self):
+        """Test conversion from euro cents to BUL stroops."""
+        data_set = [
+            {
+                'price': '0.1',
+                'euro_cent_amount': 10,
+                'expected': 10000000},
+            {
+                'price': '10',
+                'euro_cent_amount': 1000,
+                'expected': 10000000}]
+        self.euro_to_stellar(data_set, util.conversion.euro_cents_to_bul_stroops,
+                             "{} BUL stroops expected, {} got instead")
+
+    def test_euro_to_xlm(self):
+        """Test conversion from euro cents to XLM stroops."""
+        data_set = [
+            {
+                'price': '0.1',
+                'euro_cent_amount': 10,
+                'expected': 10000000},
+            {
+                'price': '10',
+                'euro_cent_amount': 1000,
+                'expected': 10000000}
+        ]
+        self.euro_to_stellar(data_set, util.conversion.euro_cents_to_xlm_stroops,
+                             "{} XLM stroops expected, {} got instead")

@@ -1,4 +1,4 @@
-"""Tests for db module"""
+"""Tests for db module."""
 import os
 import unittest
 
