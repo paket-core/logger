@@ -1,8 +1,13 @@
 """Database utils."""
 import contextlib
 import functools
+import re
 
 import mysql.connector
+
+
+class DataTooBig(Exception):
+    """Data too big for database column."""
 
 
 @contextlib.contextmanager
@@ -12,12 +17,24 @@ def sql_connection(db_name=None, host=None, port=3306, user=None, password=None)
         connection = mysql.connector.connect(host=host, port=port, user=user, passwd=password, database=db_name)
         yield connection.cursor(dictionary=True)
         connection.commit()
-    except mysql.connector.Error as db_exception:
-        raise db_exception
+    except mysql.connector.DataError as data_error:
+        check_data_error(data_error)
+    except mysql.connector.Error as db_error:
+        raise db_error
     finally:
         if 'connection' in locals():
             # noinspection PyUnboundLocalVariable
             connection.close()
+
+
+def check_data_error(data_error):
+    """Check if data error is caused by size of inserted data."""
+    error_message = str(data_error)
+    if 'Out of range value' in error_message or 'Data too long' in error_message:
+        column_name = re.search('^.+\'(.+)\'.+', error_message).group(1)
+        raise DataTooBig("Data too big for {}".format(column_name))
+
+    raise data_error
 
 
 def custom_sql_connection(host=None, port=3306, user=None, password=None, db_name=None):
