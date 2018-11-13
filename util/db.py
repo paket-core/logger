@@ -6,8 +6,8 @@ import re
 import mysql.connector
 
 
-class DataTooLong(Exception):
-    """Data too long for including to DB."""
+class DataTooBig(Exception):
+    """Data too big for database column."""
 
 
 @contextlib.contextmanager
@@ -28,11 +28,11 @@ def sql_connection(db_name=None, host=None, port=3306, user=None, password=None)
 
 
 def check_data_error(data_error):
-    """Check if data error related to size of inserting data."""
+    """Check if data error is caused by size of inserted data."""
     error_message = str(data_error)
     if 'Out of range value' in error_message or 'Data too long' in error_message:
         column_name = re.search('^.+\'(.+)\'.+', error_message).group(1)
-        raise DataTooLong("Data too long for {}".format(column_name))
+        raise DataTooBig("Data too big for {}".format(column_name))
 
     raise data_error
 
