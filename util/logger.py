@@ -1,4 +1,4 @@
-"""PaKeT logging."""
+"""PAKET logging."""
 import logging
 import os
 

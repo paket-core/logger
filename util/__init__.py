@@ -1,1 +1,1 @@
-"""PaKeT Project general utils."""
+"""PAKET Project general utils."""

@@ -1,3 +1,3 @@
-"""PaKeT util tests."""
+"""PAKET util tests."""
 import util.logger
 util.logger.setup()

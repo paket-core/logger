@@ -1,8 +1,8 @@
-"""Install PaKeT Project general utils."""
+"""Install PAKET Project general utils."""
 from setuptools import setup
 
 setup(name='util',
-      description='General utilities for PaKeT project',
+      description='General utilities for PAKET project',
       version='1.0.0',
       url='https://github.com/paket-core/util',
       license='GNU GPL',
